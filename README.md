@@ -1,6 +1,6 @@
 # Template for the Video Game Search Engine project
 
-[![build workflow](https://github.com/lernejo/video_game_search_engine_template/workflows/build.yml/badge.svg)](https://github.com/lernejo/video_game_search_engine_template/actions)
+[![build workflow](https://github.com/pxavier12/video_game_search_engine_template/workflows/build.yml/badge.svg)](https://github.com/pxavier12/video_game_search_engine_template/actions)
 [![codecov](https://codecov.io/gh/pxavier12/video_game_search_engine_template/branch/main/graph/badge.svg)](https://codecov.io/gh/pxavier12/video_game_search_engine_template)
 
 
