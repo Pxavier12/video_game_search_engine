@@ -25,16 +25,16 @@ public class GameInfoService {
         this.objectMapper = objectMapper;
         this.client = client;
     }
-    private List<MessagePojo> getSearchResult(SearchResponse response) {
+    private List<InfoPojo> getSearchResult(SearchResponse response) {
         SearchHit[] searchHit = response.getHits().getHits();
-        List<MessagePojo> gameInfos = new ArrayList<>();
+        List<InfoPojo> gameInfos = new ArrayList<>();
         if (searchHit.length > 0) {
-            Arrays.stream(searchHit).forEach(hit -> gameInfos.add(objectMapper.convertValue(hit.getSourceAsMap(), MessagePojo.class)));
+            Arrays.stream(searchHit).forEach(hit -> gameInfos.add(objectMapper.convertValue(hit.getSourceAsMap(), InfoPojo.class)));
         }
         return gameInfos;
     }
 
-    public List<MessagePojo> searchData(String query)  {
+    public List<InfoPojo> searchData(String query)  {
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         QueryStringQueryBuilder queryBuilder = QueryBuilders.queryStringQuery(query)

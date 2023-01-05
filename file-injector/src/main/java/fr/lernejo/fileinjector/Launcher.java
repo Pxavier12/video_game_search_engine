@@ -16,7 +16,7 @@ public class Launcher {
         try (AbstractApplicationContext springContext = new AnnotationConfigApplicationContext(Launcher.class)) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                List<MessagePojo> messages = Arrays.asList(mapper.readValue(Paths.get(args[0]).toFile(), MessagePojo[].class));
+                List<InfoPojo> messages = Arrays.asList(mapper.readValue(Paths.get(args[0]).toFile(), InfoPojo[].class));
                 RabbitTemplate sender = springContext.getBean(RabbitTemplate.class);
                 messages.forEach(
                     (message)-> {
