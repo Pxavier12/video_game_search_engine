@@ -15,30 +15,20 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ElasticSearchConfiguration {
-
-    final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-
     @Bean
     public RestHighLevelClient client() {
         final BasicCredentialsProvider basicCredentialsProvider = new BasicCredentialsProvider();
         basicCredentialsProvider
             .setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("elastic", "admin"));
-
         RestHighLevelClient restHighLevelClient = new RestHighLevelClient(
             RestClient.builder(new HttpHost("localhost", 9200, "http"))
                 .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
                     @Override
                     public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
                         httpClientBuilder.disableAuthCaching();
-                        return httpClientBuilder.setDefaultCredentialsProvider(basicCredentialsProvider);
-                    }
-                })
-
-        );
-
+                        return httpClientBuilder.setDefaultCredentialsProvider(basicCredentialsProvider);}}));
         return restHighLevelClient;
     }
-
 }
 
 

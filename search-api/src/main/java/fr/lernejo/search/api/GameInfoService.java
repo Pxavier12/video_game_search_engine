@@ -19,53 +19,33 @@ import java.util.List;
 
 @Service
 public class GameInfoService {
-
-    private ObjectMapper objectMapper;
-    private RestHighLevelClient client;
-
-
+    private final ObjectMapper objectMapper;
+    private final RestHighLevelClient client;
     public GameInfoService(ObjectMapper objectMapper, RestHighLevelClient client) {
         this.objectMapper = objectMapper;
         this.client = client;
     }
-
     private List<MessagePojo> getSearchResult(SearchResponse response) {
-
         SearchHit[] searchHit = response.getHits().getHits();
         List<MessagePojo> gameInfos = new ArrayList<>();
         if (searchHit.length > 0) {
-            Arrays.stream(searchHit)
-                .forEach(hit -> gameInfos.add(objectMapper.convertValue(hit.getSourceAsMap(), MessagePojo.class)));
+            Arrays.stream(searchHit).forEach(hit -> gameInfos.add(objectMapper.convertValue(hit.getSourceAsMap(), MessagePojo.class)));
         }
-
         return gameInfos;
     }
 
     public List<MessagePojo> searchData(String query)  {
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
         QueryStringQueryBuilder queryBuilder = QueryBuilders.queryStringQuery(query)
-            .field("title")
-            .field("thumbnail")
-            .field("short_description")
-            .field("genre")
-            .field("publisher")
-            .field("developer")
-            .field("release_date")
-            .defaultOperator(Operator.AND);
-
+            .field("title").field("thumbnail").field("short_description").field("genre").field("publisher")
+            .field("developer").field("release_date").defaultOperator(Operator.AND);
         searchSourceBuilder.query(queryBuilder);
         searchRequest.source(searchSourceBuilder);
-
         SearchResponse response = null;
         try {
             response = client.search(searchRequest, RequestOptions.DEFAULT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        } catch (IOException e) {throw new RuntimeException(e);}
         return getSearchResult(response);
-
     }
 }
