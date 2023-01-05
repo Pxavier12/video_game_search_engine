@@ -1,0 +1,41 @@
+{
+    "mappings": {
+        "infos": {
+            "properties": {
+                "id": {
+                    "type": "keyword"
+                },
+                "title": {
+                    "type": "keyword"
+                },
+                "thumbnail": {
+                    "type": "keyword"
+                },
+                "short_description": {
+                    "type": "keyword"
+                },
+                "game_url": {
+                    "type": "keyword"
+                },
+                "genre": {
+                    "type": "keyword"
+                },
+                "platform": {
+                    "type": "keyword"
+                },
+                "publisher": {
+                    "type": "keyword"
+                },
+                "developer": {
+                    "type": "keyword"
+                },
+                "release_date": {
+                    "type": "keyword"
+                },
+                "freetogame_profile_url": {
+                    "type": "keyword"
+                }
+            }
+        }
+    }
+}
