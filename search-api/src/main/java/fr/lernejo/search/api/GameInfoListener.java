@@ -23,12 +23,10 @@ public class GameInfoListener {
         try {
             final String infos = loadAsString("mapping.json");
             final String settings = loadAsString("settings.json");
-            final boolean indexExists = client.indices().exists(new GetIndexRequest("games"), RequestOptions.DEFAULT);
-            if(!indexExists){
-                final CreateIndexRequest createIndexRequest = new CreateIndexRequest("games");
-                createIndexRequest.settings(settings,XContentType.JSON);
-                createIndexRequest.source(infos, XContentType.JSON);
-                client.indices().create(createIndexRequest, RequestOptions.DEFAULT);}
+            final CreateIndexRequest createIndexRequest = new CreateIndexRequest("games");
+            createIndexRequest.settings(settings,XContentType.JSON);
+            createIndexRequest.source(infos, XContentType.JSON);
+            client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
             Request request = new Request("POST", "/games/infos/");
             request.setJsonEntity(message);
             client.getLowLevelClient().performRequest(request);
