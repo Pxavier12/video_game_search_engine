@@ -25,7 +25,7 @@ public class Launcher {
                         } catch (JsonProcessingException e) {throw new RuntimeException(e);}
                     }
                 );
-            } catch (Exception ex) {throw ex;}
+            } catch (Exception ex) {System.out.println(ex);}
         }
     }
 }
