@@ -2,6 +2,7 @@ package fr.lernejo.fileinjector;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -20,9 +21,12 @@ public class Launcher {
                 RabbitTemplate sender = springContext.getBean(RabbitTemplate.class);
                 messages.forEach(
                     (message)-> {
-                        try {
-                            sender.convertAndSend("game_info", mapper.writeValueAsString(message));
-                        } catch (JsonProcessingException e) {throw new RuntimeException(e);}
+                        //sender.convertAndSend("game_info", mapper.writeValueAsString(message));
+                        sender.setMessageConverter(new Jackson2JsonMessageConverter());
+                        sender.convertAndSend("", "game_info", message, msg -> {
+                            msg.getMessageProperties().getHeaders().put("game_id", message.id());
+                            return msg;
+                        });
                     }
                 );
             } catch (Exception ex) {System.out.println(ex);}

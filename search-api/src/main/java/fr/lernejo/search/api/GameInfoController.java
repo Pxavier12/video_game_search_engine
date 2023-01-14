@@ -8,8 +8,6 @@ import java.util.List;
 
 @RestController("")
 public class GameInfoController {
-
-
     private final GameInfoService gameInfoService;
 
     public GameInfoController(GameInfoService gameInfoService) {
@@ -17,7 +15,7 @@ public class GameInfoController {
     }
 
     @GetMapping("/api/games")
-    public List<InfoPojo> searchQuery(@RequestParam String query) {
+    public Iterable<Game> searchQuery(@RequestParam String query) {
         return gameInfoService.searchData(query);
 
     }
